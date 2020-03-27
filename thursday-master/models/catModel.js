@@ -12,6 +12,16 @@ const getAllCats = async () => {
   }
 };
 
+const getCat = async (id) => {
+  try {
+    const [rows] = await promisePool.query('SELECT * FROM wop_cat WHERE cat_id = ?', [ id ]);
+    return rows[0];
+  } catch (e) {
+    console.log('error', e.message);
+  }
+};
+
 module.exports = {
   getAllCats,
+  getCat
 };

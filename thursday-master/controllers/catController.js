@@ -8,9 +8,9 @@ const cat_list_get = async (req, res) => {
   res.json(cats);
 };
 
-const cat_get = (req, res) => {
+const cat_get = async (req, res) => {
   console.log('cat id parameter', req.params);
-  const cat = cats.filter(cat => cat.id === req.params.id).pop();
+  const cat = await catModel.getCat(req.params.id); //cats.filter(cat => cat.id === req.params.id).pop();
   res.json(cat);
 };
 
