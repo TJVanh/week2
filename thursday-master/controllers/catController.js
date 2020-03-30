@@ -14,9 +14,23 @@ const cat_get = async (req, res) => {
   res.json(cat);
 };
 
-const cat_post = (req, res) => {
-  console.log('cat_post', req.body);
-  res.send('With this endpoint you can add cats');
+const cat_post = async (req, res) => {
+  console.log('cat_post', req.body, req.file);
+  const inCat = {
+    name: req.body.name,
+    age: req.body.age,
+    weight: req.body.weight,
+    owner: req.body.owner,
+    filename: req.file.filename,
+  };
+  try {
+    const cat = await catModel.insertCat(inCat);
+    console.log('inserted', cat);
+    res.send(`added cat: ${cat.insertId}`);
+  } catch (e) {
+    console.error('problem with cat_post in catController', e)
+    res.status().send(`database insert error: ${e.message}`)
+  }
 };
 
 module.exports = {

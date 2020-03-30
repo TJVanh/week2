@@ -21,7 +21,19 @@ const getCat = async (id) => {
   }
 };
 
+const insertCat = async (cat) => {
+  try {
+    console.log('insert cat?', cat)
+    const [rows] = await promisePool.query('INSERT INTO wop_cat (name, age, weight, owner, filename) VALUES (?, ?, ?, ?, ?)',
+        [ cat.name, cat.age, cat.weight, cat.owner, cat.filename ]);
+    return rows;
+  } catch (e) {
+    console.log('error', e.message);
+  }
+}
+
 module.exports = {
   getAllCats,
-  getCat
+  getCat,
+  insertCat
 };
